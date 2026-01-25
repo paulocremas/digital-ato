@@ -7,18 +7,17 @@
     body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     canvas { width: 100vw; height: 100vh; display: block; }
 
-    /* Estilo do Container Arrastável */
+    /* Estilo do Container Arrastável (Strudel) */
     #strudel-container {
       position: absolute;
       top: 50%;
-      left: 15%; /* Mais para o meio horizontal */
+      left: 5%;
       transform: translateY(-50%);
-      width: 600px; /* Maior */
-      height: 450px; /* Maior */
+      width: 600px;
+      height: 450px;
       z-index: 10;
-      /* Transparência aplicada aqui */
       background: rgba(255, 255, 255, 0.05); 
-      backdrop-filter: blur(4px); /* Blur reduzido para mais transparência */
+      backdrop-filter: blur(4px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -43,55 +42,64 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    iframe {
-      flex-grow: 1;
-      border: none;
-      width: 100%;
-      height: 100%;
+    iframe { flex-grow: 1; border: none; width: 100%; height: 100%; }
+    .dragging iframe { pointer-events: none; }
+
+    /* Explorador de Arquivos (GitHub) - Alinhado à Direita */
+    #repo-container {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 280px;
+      max-height: 85vh;
+      overflow-y: auto;
+      z-index: 20;
+      text-align: right;
+      scrollbar-width: none; /* Firefox */
+    }
+    #repo-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+    details { margin-bottom: 8px; }
+    summary { 
+      cursor: pointer; 
+      list-style: none; 
+      color: rgba(240, 219, 79, 0.8); 
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: lowercase;
+      letter-spacing: 1px;
+      outline: none;
+    }
+    summary:hover { color: #f0db4f; }
+    summary::-webkit-details-marker { display: none; }
+
+    .file-list { 
+      margin-top: 5px;
+      padding-right: 10px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .dragging iframe {
-      pointer-events: none;
+    .file-item { 
+      display: block;
+      color: rgba(77, 184, 255, 0.7);
+      text-decoration: none;
+      padding: 3px 0;
+      font-size: 11px;
+      transition: 0.2s;
+      cursor: pointer;
     }
+    .file-item:hover { color: #fff; }
+
+    .loading-text { color: #555; font-size: 10px; font-style: italic; }
   </style>
   <link id="favicon" rel="icon" type="image/png" href="">
-
-<script>
-  function createNegativeFavicon(googleDriveId) {
-    const img = new Image();
-    img.crossOrigin = "Anonymous";
-    // Link de bypass para carregar imagem do Drive no Canvas
-    img.src = `https://corsproxy.io/?https://drive.google.com/uc?id=${googleDriveId}`;
-
-    img.onload = function() {
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      
-      // Desenha a imagem
-      ctx.drawImage(img, 0, 0);
-      
-      // Aplica o efeito negativo
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-	data[i]     = 255 - data[i];     // Red
-	data[i + 1] = 255 - data[i + 1]; // Green
-	data[i + 2] = 255 - data[i + 2]; // Blue
-      }
-      ctx.putImageData(imageData, 0, 0);
-      
-      // Define como ícone da aba
-      document.getElementById('favicon').href = canvas.toDataURL("image/png");
-    };
-  }
-
-  // Chame a função com o seu ID do Google Drive
-  createNegativeFavicon('1AtJ6HZc5qK5NvDKS4VG_Pop7iDZhL0SI');
-</script>
 </head>
 <body>
+
+<div id="repo-container">
+    <div id="repo-tree" class="loading-text">fetching repository...</div>
+</div>
 
 <div id="strudel-container">
   <div id="strudel-header">
@@ -138,7 +146,28 @@ void main(){
 </script>
 
 <script>
-// LÓGICA DO SHADER
+// --- LOGICA DO FAVICON ---
+function createNegativeFavicon(googleDriveId) {
+  const img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.src = `https://corsproxy.io/?https://drive.google.com/uc?id=${googleDriveId}`;
+  img.onload = function() {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width; canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      data[i] = 255 - data[i]; data[i+1] = 255 - data[i+1]; data[i+2] = 255 - data[i+2];
+    }
+    ctx.putImageData(imageData, 0, 0);
+    document.getElementById('favicon').href = canvas.toDataURL("image/png");
+  };
+}
+createNegativeFavicon('1AtJ6HZc5qK5NvDKS4VG_Pop7iDZhL0SI');
+
+// --- LOGICA DO SHADER ---
 const canvas = document.getElementById('glCanvas');
 const gl = canvas.getContext('webgl');
 function createShader(gl, type, source) {
@@ -176,7 +205,7 @@ function render(now) {
 }
 requestAnimationFrame(render);
 
-// LÓGICA DE DRAG (ARRASTAR)
+// --- LOGICA DE DRAG (Strudel) ---
 const dragItem = document.getElementById("strudel-container");
 const dragHeader = document.getElementById("strudel-header");
 let active = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
@@ -201,6 +230,71 @@ document.onmousemove = (e) => {
     dragItem.style.transform = `translate3d(${currentX}px, calc(-50% + ${currentY}px), 0)`;
   }
 };
+
+// --- LOGICA DO REPOSITORIO (GitHub) ---
+const USER = 'paulocremas';
+const REPO = 'digital-ato';
+const BASE_URL = `https://api.github.com/repos/${USER}/${REPO}/contents`;
+
+async function fetchStructure(path = '') {
+    try {
+        const response = await fetch(`${BASE_URL}/${path}`);
+        const items = await response.json();
+        const wrapper = document.createElement('div');
+
+        for (const item of items) {
+            if (item.type === 'dir') {
+                const details = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.innerText = item.name.toLowerCase() + " /";
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'file-list';
+                
+                details.appendChild(summary);
+                details.appendChild(contentDiv);
+                wrapper.appendChild(details);
+                contentDiv.appendChild(await fetchStructure(item.path));
+                
+            } else if (item.type === 'file' && !item.name.startsWith('.')) {
+                const fileLink = document.createElement('a');
+                fileLink.className = 'file-item';
+                fileLink.innerText = item.name;
+                fileLink.onclick = (e) => {
+                    e.preventDefault();
+                    copyToClipboard(item.download_url, fileLink);
+                };
+                wrapper.appendChild(fileLink);
+            }
+        }
+        return wrapper;
+    } catch (e) { return document.createTextNode(""); }
+}
+
+async function copyToClipboard(url, element) {
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        await navigator.clipboard.writeText(text);
+        
+        const originalText = element.innerText;
+        element.innerText = "✓ copied";
+        element.style.color = "#fff";
+        setTimeout(() => {
+            element.innerText = originalText;
+            element.style.color = "";
+        }, 1500);
+    } catch (err) {
+        console.error('Error copying file.');
+    }
+}
+
+fetchStructure().then(dom => {
+    const container = document.getElementById('repo-tree');
+    container.innerHTML = '';
+    container.appendChild(dom);
+});
 </script>
+
 </body>
 </html>
