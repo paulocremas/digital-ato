@@ -1,0 +1,40 @@
+body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; }
+canvas { width: 100vw; height: 100vh; display: block; }
+
+/* Strudel Container */
+#strudel-container {
+  position: absolute; top: 50%; left: 5%; transform: translateY(-50%);
+  width: 600px; height: 450px; z-index: 10;
+  background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column;
+  overflow: hidden; resize: both;
+}
+#strudel-header {
+  padding: 12px; cursor: move; background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8); font-size: 11px; font-weight: bold;
+  text-transform: uppercase; letter-spacing: 2px; user-select: none;
+  display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+iframe { flex-grow: 1; border: none; }
+.dragging iframe { pointer-events: none; }
+
+/* GitHub Repo Tree - Alinhado à Direita */
+#repo-container {
+  position: absolute; right: 30px; top: 50%; transform: translateY(-50%);
+  width: 280px; max-height: 85vh; overflow-y: auto; z-index: 20;
+  text-align: right; scrollbar-width: none;
+}
+#repo-container::-webkit-scrollbar { display: none; }
+details { margin-bottom: 8px; }
+summary { 
+  cursor: pointer; list-style: none; color: rgba(240, 219, 79, 0.8); 
+  font-size: 12px; font-weight: bold; text-transform: lowercase; outline: none;
+}
+.file-list { margin-top: 5px; padding-right: 10px; border-right: 1px solid rgba(255, 255, 255, 0.1); }
+.file-item { 
+  display: block; color: rgba(77, 184, 255, 0.7); text-decoration: none;
+  padding: 3px 0; font-size: 11px; cursor: pointer; transition: 0.2s;
+}
+.file-item:hover { color: #fff; }
+.loading-text { color: #555; font-size: 10px; font-style: italic; }
