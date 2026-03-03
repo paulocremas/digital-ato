@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.4.0">
+  <diagram name="Página-1" id="n9TQvVgcWZKzYNrL4lPx">
+    <mxGraphModel dx="987" dy="578" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XHewx9FcP3rBwtM4y49A-1" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="Rithum" vertex="1">
+          <mxGeometry height="100" width="90" x="60" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="XHewx9FcP3rBwtM4y49A-3" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;align=left;" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;GBQ Items&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;Metadata:&lt;/li&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;item_id&lt;/li&gt;&lt;li style=&quot;&quot;&gt;sku&lt;/li&gt;&lt;li style=&quot;&quot;&gt;type&lt;/li&gt;&lt;li style=&quot;&quot;&gt;vary_by&lt;/li&gt;&lt;li style=&quot;&quot;&gt;created_at&lt;/li&gt;&lt;/ul&gt;&lt;li style=&quot;&quot;&gt;Main data:&lt;/li&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;title&lt;/li&gt;&lt;li style=&quot;&quot;&gt;description&lt;/li&gt;&lt;/ul&gt;&lt;li style=&quot;&quot;&gt;Secondary data:&lt;/li&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;brand&lt;/li&gt;&lt;li style=&quot;&quot;&gt;color&lt;/li&gt;&lt;li style=&quot;&quot;&gt;gender&lt;/li&gt;&lt;li style=&quot;&quot;&gt;material&lt;/li&gt;&lt;li style=&quot;&quot;&gt;size&lt;/li&gt;&lt;li style=&quot;&quot;&gt;images&lt;/li&gt;&lt;li style=&quot;&quot;&gt;mpn&lt;/li&gt;&lt;/ul&gt;&lt;li&gt;Control fields:&lt;/li&gt;&lt;ul&gt;&lt;li&gt;is_item_parent_enriched&lt;/li&gt;&lt;li&gt;is_type_bag&lt;/li&gt;&lt;li&gt;is_bag_enriched&lt;/li&gt;&lt;li&gt;is_child_synced&lt;/li&gt;&lt;li&gt;is_posted_rithum&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="410" width="217" x="220" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="XHewx9FcP3rBwtM4y49A-4" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="GBQ Enriched&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;Items&lt;/span&gt;" vertex="1">
+          <mxGeometry height="420" width="220" x="240" y="520" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
